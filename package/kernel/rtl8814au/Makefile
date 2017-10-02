@@ -7,20 +7,35 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/nazar-pc/rtl8814AU.git
-PKG_SOURCE_VERSION:=7b129626b334c8df1d1e87643d9b04bd33f86af4
+PKG_SOURCE_VERSION:=774e6ab0ec43bed61596a9e53e136df25c3afe94
+
+STAMP_CONFIGURED_DEPENDS := $(STAGING_DIR)/usr/include/mac80211-backport/backport/autoconf.h
 
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/rtl8814au
   SUBMENU:=Wireless Drivers
   TITLE:=Realtek RTL8814AU support
-  DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-mac80211
+  DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-cfg80211
   FILES:= $(PKG_BUILD_DIR)/8814au.ko
 #  AUTOLOAD:=$(call AutoLoad,rtl8814au)
 endef
 
+NOSTDINC_FLAGS = \
+	-I$(PKG_BUILD_DIR) \
+	-I$(STAGING_DIR)/usr/include/mac80211-backport/uapi \
+	-I$(STAGING_DIR)/usr/include/mac80211-backport \
+	-I$(STAGING_DIR)/usr/include/mac80211/uapi \
+	-I$(STAGING_DIR)/usr/include/mac80211 \
+	-include backport/autoconf.h \
+	-include backport/backport.h
+
 define Build/Compile
-	$(MAKE) $(KERNEL_MAKEOPTS) M=$(PKG_BUILD_DIR) \
+	+$(MAKE) $(PKG_JOBS) -C "$(LINUX_DIR)" \
+		ARCH="$(LINUX_KARCH)" \
+		CROSS_COMPILE="$(TARGET_CROSS)" \
+		SUBDIRS="$(PKG_BUILD_DIR)" \
+		NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" \
 		USER_EXTRA_CFLAGS="-D_LINUX_BYTEORDER_SWAB_H -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT" \
 		CONFIG_RTL8814A=y CONFIG_RTL8814AU=m \
 		modules

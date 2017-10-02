@@ -1,0 +1,58 @@
+--- a/include/osdep_service_linux.h	(revision 7b129626b334c8df1d1e87643d9b04bd33f86af4)
++++ b/include/osdep_service_linux.h	(date 1506905779000)
+@@ -62,7 +62,7 @@
+ 	#include <linux/tqueue.h>
+ #endif
+ 
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,11,0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,11,0)) || 1
+ 	#include <linux/sched/signal.h>
+ #endif
+ 
+--- a/os_dep/linux/ioctl_cfg80211.c	(revision 7b129626b334c8df1d1e87643d9b04bd33f86af4)
++++ b/os_dep/linux/ioctl_cfg80211.c	(date 1506905904000)
+@@ -794,7 +794,7 @@
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
+-		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0))
++		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0)) || 1
+ 		struct cfg80211_roam_info roam_info = {};
+ 		#endif
+ 
+@@ -803,7 +803,7 @@
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0)) || 1
+ 		roam_info.channel = notify_channel;
+ 		roam_info.bssid = cur_network->network.MacAddress;
+ 		roam_info.req_ie =
+@@ -1897,7 +1897,7 @@
+ static int cfg80211_rtw_change_iface(struct wiphy *wiphy,
+ 				     struct net_device *ndev,
+ 				     enum nl80211_iftype type,
+-#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0)) && 0
+ 				     u32 *flags,
+ #endif
+ 				     struct vif_params *params)
+@@ -4059,7 +4059,7 @@
+ 		unsigned char name_assign_type,
+ 	#endif
+ 		enum nl80211_iftype type,
+-	#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
++	#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0)) && 0
+ 		u32 *flags,
+ 	#endif
+ 		struct vif_params *params)
+@@ -6458,7 +6458,7 @@
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
+-#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,12,0))
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,12,0)) && 0
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
+ #else
+ 	wiphy->max_sched_scan_reqs = 1;
