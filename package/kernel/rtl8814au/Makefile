@@ -18,7 +18,7 @@ define KernelPackage/rtl8814au
   TITLE:=Realtek RTL8814AU support
   DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-cfg80211
   FILES:= $(PKG_BUILD_DIR)/8814au.ko
-#  AUTOLOAD:=$(call AutoLoad,rtl8814au)
+  AUTOLOAD:=$(call AutoLoad,50,cfg80211 8814au)
 endef
 
 NOSTDINC_FLAGS = \
