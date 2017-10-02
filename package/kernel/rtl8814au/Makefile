@@ -2,11 +2,11 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=rtl8814au
-PKG_VERSION=2017-09-30-$(PKG_SOURCE_VERSION)
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/nazar-pc/rtl8814AU.git
+PKG_SOURCE_DATE:=2017-10-02
 PKG_SOURCE_VERSION:=774e6ab0ec43bed61596a9e53e136df25c3afe94
 
 STAMP_CONFIGURED_DEPENDS := $(STAGING_DIR)/usr/include/mac80211-backport/backport/autoconf.h
@@ -18,7 +18,7 @@ define KernelPackage/rtl8814au
   TITLE:=Realtek RTL8814AU support
   DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-cfg80211
   FILES:= $(PKG_BUILD_DIR)/8814au.ko
-  AUTOLOAD:=$(call AutoLoad,50,cfg80211 8814au)
+#  AUTOLOAD:=$(call AutoLoad,50,cfg80211 8814au)
 endef
 
 NOSTDINC_FLAGS = \
