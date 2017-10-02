@@ -9,8 +9,6 @@ PKG_SOURCE_URL:=https://github.com/nazar-pc/rtl8814AU.git
 PKG_SOURCE_DATE:=2017-10-02
 PKG_SOURCE_VERSION:=774e6ab0ec43bed61596a9e53e136df25c3afe94
 
-STAMP_CONFIGURED_DEPENDS := $(STAGING_DIR)/usr/include/mac80211-backport/backport/autoconf.h
-
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/rtl8814au
@@ -27,7 +25,6 @@ NOSTDINC_FLAGS = \
 	-I$(STAGING_DIR)/usr/include/mac80211-backport \
 	-I$(STAGING_DIR)/usr/include/mac80211/uapi \
 	-I$(STAGING_DIR)/usr/include/mac80211 \
-	-include backport/autoconf.h \
 	-include backport/backport.h
 
 define Build/Compile
@@ -37,7 +34,7 @@ define Build/Compile
 		SUBDIRS="$(PKG_BUILD_DIR)" \
 		NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" \
 		USER_EXTRA_CFLAGS="-D_LINUX_BYTEORDER_SWAB_H -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT" \
-		CONFIG_RTL8814A=y CONFIG_RTL8814AU=m \
+		CONFIG_RTL8814AU=m \
 		modules
 endef
 
