@@ -14,7 +14,7 @@ include $(INCLUDE_DIR)/package.mk
 define KernelPackage/rtl8814au
   SUBMENU:=Wireless Drivers
   TITLE:=Realtek RTL8814AU support
-  DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-cfg80211
+  DEPENDS:= +kmod-usb-core +kmod-cfg80211 @USB_SUPPORT +@DRIVER_11N_SUPPORT +@DRIVER_11AC_SUPPORT
   FILES:= $(PKG_BUILD_DIR)/rtl8814au.ko
   AUTOLOAD:=$(call AutoLoad,50,cfg80211 rtl8814au)
 endef
@@ -33,9 +33,14 @@ define Build/Compile
 		CROSS_COMPILE="$(TARGET_CROSS)" \
 		SUBDIRS="$(PKG_BUILD_DIR)" \
 		NOSTDINC_FLAGS="$(NOSTDINC_FLAGS)" \
-		USER_EXTRA_CFLAGS="-D_LINUX_BYTEORDER_SWAB_H -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT" \
 		CONFIG_RTL8814AU=m \
 		modules
+endef
+
+define KernelPackage/rtl8814au/install
+	$(INSTALL_DIR) $(1)/lib/firmware
+	$(INSTALL_DIR) $(1)/lib/firmware/rtlwifi
+	$(CP) $(PKG_BUILD_DIR)/firmware/rtl8814aufw.bin $(1)/lib/firmware/rtlwifi/
 endef
 
 $(eval $(call KernelPackage,rtl8814au))
