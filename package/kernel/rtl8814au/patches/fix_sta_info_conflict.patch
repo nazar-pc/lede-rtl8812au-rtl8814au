@@ -1,0 +1,11 @@
+--- a/include/drv_types.h	(date 1506930757000)
++++ b/include/drv_types.h	(date 1506932577000)
+@@ -103,7 +103,7 @@
+ #include <rtw_ioctl_rtl.h>
+ #include <osdep_intf.h>
+ #include <rtw_eeprom.h>
+-#include <sta_info.h>
++#include "sta_info.h"
+ #include <rtw_event.h>
+ #include <rtw_mlme_ext.h>
+ #include <rtw_ap.h>

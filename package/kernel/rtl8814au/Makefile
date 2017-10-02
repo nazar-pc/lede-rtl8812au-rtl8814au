@@ -7,7 +7,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/nazar-pc/RTL8814AU.git
 PKG_SOURCE_DATE:=2017-10-02
-PKG_SOURCE_VERSION:=774e6ab0ec43bed61596a9e53e136df25c3afe94
+PKG_SOURCE_VERSION:=200d0d2d0d11ef5e9eab861e100ee69cbfbd6419
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -15,8 +15,8 @@ define KernelPackage/rtl8814au
   SUBMENU:=Wireless Drivers
   TITLE:=Realtek RTL8814AU support
   DEPENDS:= @USB_SUPPORT +kmod-usb-core +kmod-cfg80211
-  FILES:= $(PKG_BUILD_DIR)/8814au.ko
-#  AUTOLOAD:=$(call AutoLoad,50,cfg80211 8814au)
+  FILES:= $(PKG_BUILD_DIR)/rtl8814au.ko
+  AUTOLOAD:=$(call AutoLoad,50,cfg80211 rtl8814au)
 endef
 
 NOSTDINC_FLAGS = \
