@@ -5,7 +5,7 @@ PKG_NAME:=rtl8814au
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/nazar-pc/rtl8814AU.git
+PKG_SOURCE_URL:=https://github.com/nazar-pc/RTL8814AU.git
 PKG_SOURCE_DATE:=2017-10-02
 PKG_SOURCE_VERSION:=774e6ab0ec43bed61596a9e53e136df25c3afe94
 
